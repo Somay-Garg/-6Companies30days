@@ -1,0 +1,16 @@
+string encode(string src)
+{     
+  //Your code here 
+  string ans;
+  int count=0,i;
+  for(i=0;i<src.size()-1;i++){
+      if(src[i]==src[i+1]){
+          count++;
+      }else{
+          ans+=src[i]+to_string(count+1);
+          count=0;
+      }
+  }
+  ans+=src[i]+to_string(count+1);
+  return ans;
+}  
