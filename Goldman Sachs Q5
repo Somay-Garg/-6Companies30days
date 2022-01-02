@@ -1,0 +1,13 @@
+set<unsigned long long>ugly;
+ugly.insert(1);
+int i=0;
+unsigned long long ele;
+while(i+1<n){
+    ele = *ugly.begin();
+    ugly.insert(ele*2);
+    ugly.insert(ele*3);
+    ugly.insert(ele*5);
+    ugly.erase(ugly.begin());
+    i++;
+}
+return *ugly.begin();
