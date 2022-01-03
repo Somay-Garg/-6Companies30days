@@ -1,0 +1,35 @@
+class Solution{   
+public:
+    string printMinNumberForPattern(string str){
+        int i=0,count=1,countD=0;
+        string ans="";
+        while(i<str.length()){
+            char ch = str[i];
+            if(i==0&&ch=='I'){
+                ans+=to_string(count);
+                count++;
+            }
+            
+            if(ch=='D'){
+                countD++;
+            }
+            
+            int j=i+1;
+            while(j<str.length()&&str[j]=='D'){
+                countD++;
+                j++;
+            }
+            
+            int k = countD;
+            while(countD>=0){
+                ans+=to_string(count+countD);
+                countD--;
+            }
+            
+            i=j;
+            countD=0;
+            count+=(k+1);
+        }
+        return ans;
+    }
+};
