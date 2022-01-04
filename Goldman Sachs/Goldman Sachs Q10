@@ -1,0 +1,21 @@
+class Solution{
+    public:
+        vector<int> max10Elements(vector<int>&arr){
+            priority_queue <int, vector<int>, greater<int> > pq;
+        	for(int i=0;i<10;i++){
+        	    pq.push(INT_MIN);
+        	}
+        	for(int i=0;i<10000000;i++){
+        	    if(arr[i]>pq.top()){
+        	        pq.pop();
+        	        pq.push(arr[i]);
+        	    }
+        	}
+        	vector<int>ans;
+        	while(!pq.empty()){
+        	    ans.push_back(pq.top());
+        	    pq.pop();
+        	}
+        	return ans;
+        }
+};
