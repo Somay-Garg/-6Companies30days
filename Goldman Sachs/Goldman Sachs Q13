@@ -1,0 +1,39 @@
+class Solution{
+public:
+    string decodedString(string s){
+        // code here
+        stack<string>stk;
+        stack<int>stk2;
+        string ans="";
+        for(int i=0;i<s.size();i++){
+            if(s[i]==']'){
+                string cur="";
+                while(stk.top()!="["){
+                    cur = stk.top()+cur;
+                    stk.pop();
+                }
+                stk.pop();
+                int k = stk2.top();
+                stk2.pop();
+                while(k--){
+                    ans+=cur;
+                }
+                stk.push(ans);
+                ans="";
+            }else if(isdigit(s[i])){
+                int num=0;
+                while(isdigit(s[i])){
+                    num=num*10+(s[i]-'0');
+                    i++;
+                }
+                i--;
+                stk2.push(num);
+            }else{
+                string cur="";
+                cur += s[i];
+                stk.push(cur);
+            }
+        }
+        return stk.top();
+    }
+};
