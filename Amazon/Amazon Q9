@@ -1,0 +1,58 @@
+class Solution{
+public:
+    int isValid(vector<vector<int>> mat){
+        for(int i=0;i<9;i++){
+            //For checking Rows
+            if(!checkRow(mat[i])){
+                return 0;
+            }
+            //For checking Columns
+            vector<int>check(10,0);
+            for(int j=0;j<9;j++){
+                if(mat[j][i]!=0){
+                    check[mat[j][i]]++;
+                    if(check[mat[j][i]]>1){
+                        return 0;
+                    }
+                }
+            }
+        }
+        //For checking 3*3 squares
+        for(int i=0;i<9;i+=3){
+            for(int j=0;j<9;j+=3){
+                if(!checkSquare(mat,i,j)){
+                    return 0;
+                }
+            }
+        }
+        return 1;
+    }
+    
+    bool checkRow(vector<int>&row){
+        vector<int>check(10,0);
+        for(int i=0;i<9;i++){
+            if(row[i]!=0){
+                check[row[i]]++;
+                if(check[row[i]]>1){
+                    return 0;
+                }
+            }
+        }
+        return 1;
+    }
+    
+    bool checkSquare(vector<vector<int>>&mat,int row,int col){
+        vector<int>check(10,0);
+        for(int i=row;i<row+3;i++){
+            for(int j=col;j<col+3;j++){
+                if(mat[i][j]!=0){
+                    check[mat[i][j]]++;
+                    if(check[mat[i][j]]>1){
+                        return 0;
+                    }
+                }
+            }
+        }
+        return 1;
+    }
+};
