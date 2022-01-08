@@ -1,0 +1,29 @@
+class Solution {
+	public:
+		string FirstNonRepeating(string A){
+		    // Code here
+		    vector<int>track(26,0);
+		    queue<char>next;
+		    string ans;
+		    for(int i=0;i<A.size();i++){
+		        if(track[A[i]-'a']==0){
+		            next.push(A[i]);
+		        }
+		        track[A[i]-'a']++;
+		        if(track[next.front()-'a']!=1){
+		            while(!next.empty()&&track[next.front()-'a']!=1){
+		                next.pop();
+		            }
+		            if(!next.empty()){
+		                ans+=next.front();
+		            }else{
+		                ans+='#';
+		            }
+		        }else{
+		            ans+=next.front();
+		        }
+		    }
+		    return ans;
+		}
+
+};
