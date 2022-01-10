@@ -1,0 +1,33 @@
+class Solution
+{
+    void preorder(Node *root, vector<int>&ans){
+        if(!root){
+            ans.push_back(-1);
+            return;
+        }
+        ans.push_back(root->data);
+        preorder(root->left,ans);
+        preorder(root->right,ans);
+        return;
+    }
+    public:
+    vector<int> serialize(Node *root) 
+    {
+        vector<int>ans;
+        preorder(root,ans);
+        return ans;
+    }
+    int idx=0;
+    Node * deSerialize(vector<int> &A)
+    {
+       if(A.size()-1<idx||A[idx]==-1){
+           idx++;
+           return nullptr;
+       }
+       Node *root = new Node(A[idx++]);
+       root->left=deSerialize(A);
+       root->right=deSerialize(A);
+       return root;
+    }
+
+};
