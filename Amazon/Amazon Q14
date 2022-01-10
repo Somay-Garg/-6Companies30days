@@ -1,0 +1,110 @@
+class Solution {
+    
+    int time = 0;
+    
+    int burnNode(Node *root, int target){
+        if(!root){
+            return -1;
+        }
+        if(root->data==target){
+            burnTree(root,nullptr,0);
+            return 1;
+        }
+        int leftTree = burnNode(root->left,target);
+        if(leftTree!=-1){
+            burnTree(root,root->left,leftTree);
+            return leftTree+1;
+        }
+        int rightTree = burnNode(root->right,target);
+        if(rightTree!=-1){
+            burnTree(root,root->right,rightTree);
+            return rightTree+1;
+        }
+        
+        return -1;
+    }
+    
+    void burnTree(Node *root, Node *endNode, int t){
+        if(!root||root==endNode){
+            return;
+        }
+        
+        time = max(time,t);
+        
+        burnTree(root->left,endNode,t+1);
+        burnTree(root->right,endNode,t+1);
+    }
+    
+    Node* mapParentNode(Node *root, int target, map<Node*,Node*>&mapNodes){
+        queue<Node*>q;
+        q.push(root);
+        Node *targetNode;
+        while(!q.empty()){
+            int size = q.size();
+            while(size--){
+                root = q.front();
+                q.pop();
+                if(root->data==target){
+                    targetNode = root;
+                }
+                if(root->left){
+                    mapNodes[root->left]=root;
+                    q.push(root->left);
+                }
+                if(root->right){
+                    mapNodes[root->right]=root;
+                    q.push(root->right);
+                }
+            }
+        }
+        return targetNode;
+    }
+    
+    int burningTree(Node *root, map<Node*,Node*>mapNodes){
+        map<Node*,int>vis;
+        queue<Node*>q;
+        q.push(root);
+        vis[root]=1;
+        while(!q.empty()){
+            int size = q.size();
+            bool flag = false;
+            while(size--){
+                root = q.front();
+                q.pop();
+                if(root->left&&!vis[root->left]){
+                    vis[root->left]=1;
+                    q.push(root->left);
+                    flag=true;
+                }
+                if(root->right&&!vis[root->right]){
+                    vis[root->right]=1;
+                    q.push(root->right);
+                    flag=true;
+                }
+                if(mapNodes[root]&&!vis[mapNodes[root]]){
+                    vis[mapNodes[root]]=1;
+                    q.push(mapNodes[root]);
+                    flag=true;
+                }
+            }
+            if(flag){
+                time++;
+            }
+        }
+        return time;
+    }
+    
+  public:
+    int minTime(Node* root, int target) 
+    {
+            //Using Recursion
+        // burnNode(root,target);
+        // return time;
+        
+            //Using queues and maps
+        map<Node*,Node*>mapNodes;
+        Node *targetNode = mapParentNode(root,target,mapNodes);
+        int time = burningTree(targetNode,mapNodes);
+        return time;
+    }
+};
