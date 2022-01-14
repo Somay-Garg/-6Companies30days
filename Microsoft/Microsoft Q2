@@ -1,0 +1,38 @@
+class Solution {
+    vector<bool>vis1;
+    vector<bool>vis2;
+    vector<vector<int>>graph;
+public:
+	bool isPossible(int n, vector<pair<int, int> >& prerequisites) {
+	    graph.resize(n);
+	    for(auto it : prerequisites){
+	        graph[it.second].push_back(it.first);
+	    }
+	    vis1.resize(n,false);
+	    vis2.resize(n,false);
+	    for(int i = 0;i<n;i++){
+	        if(!vis1[i]){
+	            if(dfs(i)){
+	                return false;
+	            }
+	        }
+	    }
+	    return true;
+	}
+	
+	bool dfs(int i){
+	    vis1[i] = true;
+	    vis2[i] = true;
+	    for(auto it : graph[i]){
+	        if(!vis1[it]){
+	            if(dfs(it)){
+	                return true;
+	            }
+	        }else if(vis2[it]){
+	            return true;
+	        }
+	    }
+	    vis2[i]=false;
+	    return false;
+	}
+};
