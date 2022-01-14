@@ -1,10 +1,8 @@
 class Solution
 {   
     public: 
-    //Function to return a list of integers denoting spiral traversal of matrix.
     vector<int> spirallyTraverse(vector<vector<int> > matrix, int r, int c) 
     {
-        // code here 
         vector<int>ans;
         int minr = 0, minc = 0, maxr = r-1, maxc = c-1;
         int total = r*c, count=0;
