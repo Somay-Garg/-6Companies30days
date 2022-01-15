@@ -1,0 +1,37 @@
+class Solution{
+    string ans;
+    vector<int>graph[150];
+    vector<bool>vis;
+    public:
+    string findOrder(string dict[], int n, int k) {
+        vis.resize(300,0);
+        for(int i=0;i<n-1;i++){
+            string s1 = dict[i];
+            string s2 = dict[i+1];
+            int j=0;
+            while(s1[j]==s2[j]){
+                j++;
+            }
+            graph[s1[j]].push_back(s2[j]);
+        }
+        
+        for(int i=97;i<97+k;i++){
+            if(!vis[i]){
+                dfs(i);
+            }
+        }
+        
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+    
+    void dfs(int i){
+        vis[i]=true;
+        for(int it : graph[i]){
+            if(!vis[it]){
+                dfs(it);
+            }
+        }
+        ans+=(char)(i);
+    }
+};
