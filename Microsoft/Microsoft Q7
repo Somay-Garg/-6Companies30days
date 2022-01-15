@@ -1,0 +1,36 @@
+class Solution
+{
+    public:
+    int findMaxArea(vector<vector<int>>& grid) {
+        int r = grid.size(), c = grid[0].size();
+        int largestRgn = 0;
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                if(grid[i][j]==1){
+                    int chkRgn=0;
+                    markVis(grid,i,j,r,c,chkRgn);
+                    if(chkRgn>largestRgn){
+                        largestRgn=chkRgn;
+                    }
+                }
+            }
+        }
+        return largestRgn;
+    }
+    
+    void markVis(vector<vector<int>>&grid,int i,int j,int r,int c,int &chkRgn){
+        if(i<0||i>=r||j<0||j>=c||grid[i][j]!=1){
+            return;
+        }
+        grid[i][j]=2;
+        chkRgn++;
+        markVis(grid,i+1,j,r,c,chkRgn);
+        markVis(grid,i,j+1,r,c,chkRgn);
+        markVis(grid,i-1,j,r,c,chkRgn);
+        markVis(grid,i,j-1,r,c,chkRgn);
+        markVis(grid,i-1,j-1,r,c,chkRgn);
+        markVis(grid,i+1,j+1,r,c,chkRgn);
+        markVis(grid,i-1,j+1,r,c,chkRgn);
+        markVis(grid,i+1,j-1,r,c,chkRgn);
+    }
+};
