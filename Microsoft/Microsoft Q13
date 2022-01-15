@@ -1,0 +1,44 @@
+class Solution
+{
+    vector<pair<int,int>>bridges;
+	public:
+    //Function to find if the given edge is a bridge in graph.
+    int isBridge(int V, vector<int> adj[], int c, int d) 
+    {
+        int timer=0;
+        vector<int>tin(V,-1),low(V,-1);
+        vector<bool>vis(V,false);
+        for(int i=0;i<V;i++){
+            if(!vis[i]){
+                dfs(i,-1,adj,tin,low,vis,timer);
+            }
+        }
+        for(auto it : bridges){
+            if((it.first==c&&it.second==d)||(it.first==d&&it.second==c)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    void dfs(int node, int parent, vector<int>adj[], vector<int>&tin, vector<int>&low, 
+     vector<bool>&vis, int timer){
+            vis[node]=true;
+            tin[node] = low[node] = timer++;
+            
+            for(auto it : adj[node]){
+                if(it == parent){
+                    continue;
+                }
+                if(!vis[it]){
+                    dfs(it,node,adj,tin,low,vis,timer);
+                    low[node] = min(low[node],low[it]);
+                    if(low[it]>tin[node]){
+                        bridges.push_back({it,node});
+                    }
+                }else{
+                    low[node] = min(low[node],tin[it]);
+                }
+            }
+        }
+};
