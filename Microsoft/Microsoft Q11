@@ -1,0 +1,18 @@
+void bin(int n,string &auxi){
+    if(n>1){
+        bin(n/2,auxi);
+    }
+    auxi+=to_string(n%2);
+}
+
+vector<string> generate(int N)
+{
+	vector<string>ans;
+	string auxi;
+	for(int i=1;i<=N;i++){
+	    bin(i,auxi);
+	    ans.push_back(auxi);
+	    auxi="";
+	}
+	return ans;
+}
