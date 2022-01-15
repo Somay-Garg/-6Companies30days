@@ -1,0 +1,17 @@
+int calSum(Node *root, int X, int &count){
+    if(!root){
+        return 0;
+    }
+    int currSum = root->data + calSum(root->left,X,count) + calSum(root->right,X,count);
+    if(currSum == X){
+        count++;
+    }
+    return currSum;
+}
+
+int countSubtreesWithSumX(Node* root, int X)
+{
+	int count=0;
+	calSum(root,X,count);
+	return count;
+}
