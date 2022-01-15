@@ -1,0 +1,43 @@
+class Solution{
+    public:
+    vector<vector<int> > fourSum(vector<int> &arr, int k) {
+        vector<vector<int>>ans;
+        int n=arr.size();
+        sort(arr.begin(),arr.end());
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                int rem = k-arr[i]-arr[j];
+                int l = j+1, h = n-1;
+                while(l<h){
+                    int curr = arr[l]+arr[h];
+                    if(curr<rem){
+                        l++;
+                    }else if(curr>rem){
+                        h--;
+                    }else{
+                        vector<int>auxi;
+                        auxi.push_back(arr[i]);
+                        auxi.push_back(arr[j]);
+                        auxi.push_back(arr[l]);
+                        auxi.push_back(arr[h]);
+                        ans.push_back(auxi);
+                        
+                        while(l<h && arr[l]==auxi[2]){
+                            l++;
+                        }
+                        while(l<h && arr[h]==auxi[3]){
+                            h--;
+                        }
+                    }
+                }
+                while(j<n && arr[j]==arr[j+1]){
+                    j++;
+                }
+            }
+            while(i<n && arr[i]==arr[i+1]){
+                i++;
+            }
+        }
+        return ans;
+    }
+};
