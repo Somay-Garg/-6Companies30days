@@ -1,0 +1,135 @@
+     //Extra auxiliary space
+class Solution
+{
+    vector<string>ans;
+    public:
+    vector<string> possibleWords(int a[], int N)
+    {
+        string auxi;
+        vector<string>val={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        findWords(a,N,0,auxi,val);
+        return ans;
+    }
+    
+    void findWords(int a[], int n, int idx, string auxi, vector<string>&val){
+        if(idx==n){
+            ans.push_back(auxi);
+            return;
+        }
+        string word = val[a[idx]];
+        for(int i=0;i<word.size();i++){
+            auxi+=word[i];
+            findWords(a,n,idx+1,auxi,val);
+            auxi.pop_back();
+        }
+    }
+};
+
+
+    //for O(n)
+ 
+class Solution
+{
+    vector<string>ans;
+    public:
+    vector<string> possibleWords(int a[], int N)
+    {
+        string auxi;
+        findWords(a,N,0,auxi);
+        return ans;
+    }
+    
+    void findWords(int a[], int n, int idx, string auxi){
+        if(idx==n){
+            ans.push_back(auxi);
+            return;
+        }
+        if(a[idx]==2){
+            auxi+='a';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='b';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='c';
+            findWords(a,n,idx+1,auxi);
+            return;
+        }else if(a[idx]==3){
+            auxi+='d';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='e';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='f';
+            findWords(a,n,idx+1,auxi);
+            return;
+        }else if(a[idx]==4){
+            auxi+='g';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='h';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='i';
+            findWords(a,n,idx+1,auxi);
+            return;
+        }else if(a[idx]==5){
+            auxi+='j';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='k';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='l';
+            findWords(a,n,idx+1,auxi);
+            return;
+        }else if(a[idx]==6){
+            auxi+='m';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='n';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='o';
+            findWords(a,n,idx+1,auxi);
+            return;
+        }else if(a[idx]==7){
+            auxi+='p';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='q';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='r';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='s';
+            findWords(a,n,idx+1,auxi);
+            return;
+        }else if(a[idx]==8){
+            auxi+='t';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='u';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='v';
+            findWords(a,n,idx+1,auxi);
+            return;
+        }else{
+            auxi+='w';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='x';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='y';
+            findWords(a,n,idx+1,auxi);
+            auxi.pop_back();
+            auxi+='z';
+            findWords(a,n,idx+1,auxi);
+            return;
+        }
+    }
+};
