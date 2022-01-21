@@ -1,0 +1,23 @@
+class Solution{
+    public:
+    string amendSentence (string s)
+    {
+        string ans;
+        string curr;
+        for(int i=0;i<s.size();i++){
+            if(s[i]<'a'){
+                if(i==0){
+                    ans+=curr;
+                }else{
+                    ans+=curr+" ";
+                }
+                curr="";
+                curr+=(char)(s[i]-'A'+'a');
+            }else{
+                curr+=s[i];
+            }
+        }
+        ans+=curr;
+        return ans;
+    }
+};
