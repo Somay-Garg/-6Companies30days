@@ -1,0 +1,35 @@
+class Solution
+{
+    public:
+    vector<string> AllParenthesis(int n) 
+    {
+        vector<string>ans;
+        int open=1,close=0;
+        string curr="(";
+        helper(n,ans,curr,open,close);
+        return ans;
+    }
+    
+    void helper(int n,vector<string>&ans,string curr,int open,int close){
+        if(open<close){
+            return;
+        }
+        if(open>n||close>n){
+            return;
+        }
+        if(n==open&&open==close){
+            ans.push_back(curr);
+            return;
+        }
+        if(open==close){
+            curr+="(";
+            helper(n,ans,curr,open+1,close);
+        }else{
+            curr+="(";
+            helper(n,ans,curr,open+1,close);
+            curr.pop_back();
+            curr+=")";
+            helper(n,ans,curr,open,close+1);
+        }
+    }
+};
