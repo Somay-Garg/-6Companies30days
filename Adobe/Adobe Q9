@@ -1,0 +1,55 @@
+class Solution{
+  public:
+    string nextPalin(string str) { 
+              //By using intrinsic next_permutation funtion
+        // if(str.size()<=3){
+        //     return "-1";
+        // }
+        // string ans = str.substr(0,str.size()/2);
+        // if(next_permutation(ans.begin(),ans.end())){
+        //     string auxi=ans;
+        //     if(str.size()%2==1){
+        //         ans+=str[str.size()/2];
+        //     }
+        //     reverse(auxi.begin(),auxi.end());
+        //     ans+=auxi;
+        //     return ans;
+        // }
+        // return "-1";
+        
+            //Without using intrinsic next_permutation funtion
+        
+        int n = str.size();
+        if(n<=3){
+            return "-1";
+        }
+        string half = str.substr(0,n/2);
+        int i;
+        for(i=half.size()-2;i>=0;i--){
+            if(half[i]<half[i+1])
+                break;
+        }
+        if(i<0){
+            return "-1";
+        }else{
+            int j;
+            for(j=half.size()-1;j>i;j--){
+                if(half[j]>half[i]){
+                    break;
+                }
+            }
+            swap(half[i],half[j]);
+            reverse(half.begin()+i+1,half.end());
+            string ans=half;
+            reverse(half.begin(),half.end());
+            if(n%2!=0){
+                ans+=str[n/2];
+            }
+            ans+=half;
+            if(ans==str){
+                return "-1";
+            }
+            return ans;
+        }
+    }
+};
