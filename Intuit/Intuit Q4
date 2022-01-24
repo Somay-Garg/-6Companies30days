@@ -1,0 +1,39 @@
+class Solution
+{
+    public:
+    string findMaximumNum(string str, int k)
+    {
+        helper(str,k,0);
+        return ans;
+    }
+    string ans;
+    void helper(string str,int k,int idx){
+        if(k==0||idx==str.length()){
+            if(ans<str){
+                ans=str;
+            }
+            return;
+        }
+        char ch = *max_element(str.begin()+idx,str.end());
+        vector<int>temp;
+        temp = getIdx(str,ch,idx);
+        for(int i=0;i<temp.size();i++){
+            string auxi=str;
+            swap(str[idx],str[temp[i]]);
+            if(auxi!=str)
+                helper(str,k-1,idx+1);
+            else
+                helper(str,k,idx+1);
+            swap(str[idx],str[temp[i]]);
+        }
+    }
+    vector<int> getIdx(string &str, char ch, int idx){
+        vector<int>ans;
+        for(int i=idx;i<str.length();i++){
+            if(str[i]==ch){
+                ans.push_back(i);
+            }
+        }
+        return ans;
+    }
+};
