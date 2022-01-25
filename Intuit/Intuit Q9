@@ -1,0 +1,39 @@
+class Solution {
+public:
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+        int row = heights.size(), col = heights[0].size(); 
+        vector<vector<int>>pacific(row,vector<int>(col,0)),atlantic(row,vector<int>(col,0));
+        vector<int>auxi;
+        vector<vector<int>>ans;
+        for(int i=0;i<row;i++){
+            markVis(heights,pacific,i,0,INT_MIN);
+            markVis(heights,atlantic,i,col-1,INT_MIN);
+        }
+        for(int i=0;i<col;i++){
+            markVis(heights,pacific,0,i,INT_MIN);
+            markVis(heights,atlantic,row-1,i,INT_MIN);
+        }
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(pacific[i][j]==-1&&atlantic[i][j]==-1){
+                    auxi.clear();
+                    auxi.push_back(i);
+                    auxi.push_back(j);
+                    ans.push_back(auxi);
+                }
+            }
+        }
+        return ans;
+    }
+    
+    void markVis(vector<vector<int>>& heights,vector<vector<int>>& mark,int i, int j, int prev){
+        if(i<0||i>=heights.size()||j<0||j>=heights[0].size()||mark[i][j]==-1||heights[i][j]<prev){
+            return;
+        }
+        mark[i][j]=-1;
+        markVis(heights,mark,i+1,j,heights[i][j]);
+        markVis(heights,mark,i,j+1,heights[i][j]);
+        markVis(heights,mark,i-1,j,heights[i][j]);
+        markVis(heights,mark,i,j-1,heights[i][j]);
+    }
+};
