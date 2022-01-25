@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int shipWithinDays(vector<int>& weights, int days) {
+        long l = *max_element(weights.begin(),weights.end());
+        long h = accumulate(weights.begin(),weights.end(),(long)0);
+        long mid;
+        
+        auto shipDays = [&](long mid){
+            int shipping=1;
+            long sum=0;
+            for(int val : weights){
+                if(sum+val>mid){
+                    shipping += 1;
+                    sum=0;
+                }
+                sum+=val;
+            }
+            return shipping;
+        };
+        
+        while(l<h){
+            mid = l + (h-l)/2;
+            if(shipDays(mid)>days){
+                l=mid+1;
+            }else{
+                h=mid;
+            }
+        }
+        return l;
+    }
+};
