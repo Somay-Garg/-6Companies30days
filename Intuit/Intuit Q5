@@ -1,0 +1,49 @@
+class Solution {
+public:
+    int splitArray(vector<int>& nums, int m) {
+                //Dynamic Programming solution
+        // vector<long>sums,dp1,dp2;
+        // sums.push_back(nums[0]);
+        // for(int i=1;i<nums.size();i++){
+        //     sums.push_back(sums.back()+nums[i]);
+        // }
+        // dp1=sums;
+        // for(int i=1;i<m;i++){
+        //     dp2 = vector<long>(nums.size(),INT_MAX);
+        //     for(int j=0;j<nums.size();j++){
+        //         for(int k=0;k<j;k++){
+        //             dp2[j] = min(dp2[j],max(dp1[k],sums[j]-sums[k]));
+        //         }
+        //     }
+        //     dp1=dp2;
+        // }
+        // return dp1[nums.size()-1];
+        
+                //Binary Search Approach
+        long h = accumulate(nums.begin(),nums.end(),(long)0);
+        long l = *max_element(nums.begin(),nums.end());
+        long mid;
+        
+        auto splits = [&](long mid){
+            int split=1,sum=0;
+            for(int val : nums){
+                if(sum+val>mid){
+                    split+=1;
+                    sum=0;
+                }
+                sum+=val;
+            }
+            return split;
+        };
+        
+        while(l<h){
+            mid = l+(h-l)/2;
+            if(splits(mid,nums)>m){
+                l=mid+1;
+            }else{
+                h=mid;
+            }
+        }
+        return l;
+    }
+};
