@@ -1,0 +1,45 @@
+class Solution {
+public:
+    vector<int> findOrder(int n, vector<vector<int>>& prerequisites) {
+        vector<int>ans;
+        vector<int>graph[n];
+        vector<bool>vis(n,0);
+        vector<bool>dfsvis(n,0);
+        for(int i=0;i<prerequisites.size();i++){
+            int val1 = prerequisites[i][0];
+            int val2 = prerequisites[i][1];
+            graph[val2].push_back(val1);
+        }
+        stack<int>stk;
+        vector<int>x;
+        for(int i=0;i<n;i++){
+            if(!vis[i]){
+                if(dfs(graph,vis,dfsvis,stk,i)){
+                    return ans;
+                }
+            }
+        }
+        while(!stk.empty()){
+            ans.push_back(stk.top());
+            stk.pop();
+        }
+        return ans;
+    }
+    
+    bool dfs(vector<int>graph[],vector<bool>&vis,vector<bool>&dfsvis,stack<int>&stk,int node){
+        vis[node]=true;
+        dfsvis[node]=true;
+        for(int i : graph[node]){
+            if(!vis[i]){
+                if(dfs(graph,vis,dfsvis,stk,i)){
+                    return true;
+                }
+            }else if(dfsvis[i]){
+                return true;
+            }
+        }
+        dfsvis[node]=false;
+        stk.push(node);
+        return false;
+    }
+};
