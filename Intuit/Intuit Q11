@@ -1,0 +1,27 @@
+class Solution {
+public:
+    Node* construct(vector<vector<int>>& grid) {
+        int n = grid.size();
+        return createQuadTree(grid,0,0,n);
+    }
+    
+    Node* createQuadTree(vector<vector<int>>& grid, int i, int j,int size){
+        if(size==1||chkVal(grid,i,j,size)){
+            return new Node(grid[i][j],1);
+        }
+        return new Node(0,0,createQuadTree(grid,i,j,size/2),createQuadTree(grid,i,j+size/2,size/2),
+                        createQuadTree(grid,i+size/2,j,size/2),createQuadTree(grid,i+size/2,j+size/2,size/2));
+    }
+    
+    bool chkVal(vector<vector<int>>& grid, int i, int j,int size){
+        int val = grid[i][j];
+        for(int x=i;x<i+size;x++){
+            for(int y=j;y<j+size;y++){
+                if(grid[x][y]!=val){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+};
