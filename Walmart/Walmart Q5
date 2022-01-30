@@ -1,0 +1,24 @@
+/* A binary tree node
+struct Node
+{
+    int data;
+    Node* left, * right;
+}; */
+
+class Solution {
+  public:
+    void toSumTree(Node *root)
+    {
+        root->data = helper(root->left)+helper(root->right);
+    }
+    int helper(Node *root){
+        if(!root){
+            return 0;
+        }
+        int leftVal = helper(root->left);
+        int rightVal = helper(root->right);
+        int data = root->data;
+        root->data = leftVal+rightVal;
+        return leftVal+data+rightVal;
+    }
+};
