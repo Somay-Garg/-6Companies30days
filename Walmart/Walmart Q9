@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int getMoneyAmount(int n) {
+        vector<vector<int>> dp(n + 1 , vector<int>(n + 1 , 0));
+    	for(int window = 1 ; window < n ; window++){
+            for(int low = 1 ; low <= n - window ; low++){
+                int high = low + window;
+                int ans = INT_MAX;
+                for(int num = low ; num <= high ; num++){
+                    int case1 = num + (num - 1 >= 0 ? dp[low][num - 1] : 0);
+                    int case2 = num + (num + 1 <= n  ? dp[num + 1][high] : 0);
+                    ans = min(ans , max(case1 , case2));
+                }
+			    dp[low][high] = ans;
+		    }
+	    }
+	    return dp[1][n];
+    }
+};
