@@ -1,0 +1,31 @@
+class Solution
+{
+    string ans;
+    public:
+    string findMaximumNum(string str, int k)
+    {
+        helper(str,k,0);
+        return ans;
+    }
+    
+    void helper(string str, int k, int idx){
+        if(ans<str){
+            ans=str;
+        }
+        if(k==0||idx==str.length()){
+            return;
+        }
+        bool flag=false;
+        for(int i=idx;i<str.size();i++){
+            if(str[idx]<str[i]){
+                swap(str[idx],str[i]);
+                helper(str,k-1,idx+1);
+                swap(str[idx],str[i]);
+                flag=true;
+            }
+        }
+        if(!flag){
+            helper(str,k,idx+1);
+        }
+    }
+};
